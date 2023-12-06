@@ -10,10 +10,10 @@ def errors_commands(func):
         except (KeyError, ValueError, IndexError, TypeError, NameError) as err:
             error_messages = {
                 KeyError: "Enter user name",
-                ValueError: "Vron number",           
+                ValueError: "Wron number",           
                 IndexError: "Index out of range. Please provide valid input.",
                 TypeError: "Invalid number of arguments. Please check your input.",
-                NameError: "Vrong command"
+                NameError: "Wrong command"
             }
             return error_messages.get(type(err), "An error occurred.")
     return inner
@@ -67,25 +67,30 @@ def farewell():
     """
     return "Good bye!"
 
+
 @errors_commands
 def parser_command(user_command):
-    """Функція, яка приймає обробляє команди користувача і повертає відповідь 
+    """Функція, яка обробляє команди користувача і повертає відповідь 
     """
-    if user_command[0] == 'hello':
-        return(hello_user())
-    elif user_command[0] == 'add':
-        return(add_contact(*user_command[1:]))
-    elif user_command[0] == 'change':
-        return(change_phone(*user_command[1:]))
-    elif user_command[0] == 'phone':
-        return(show_phone(*user_command[1:]))
-    elif user_command[0] == 'show' and  user_command[1] == 'all':
-        return(show_all())
-    elif user_command[0] in ('good bye', 'close', 'exit'):
-        return(farewell())
-        sys.exit()
+    users_commands = {
+        'hello': hello_user,
+        'add': add_contact,
+        'change': change_phone,
+        'phone': show_phone,
+        'show'+' '+'all': show_all,
+        'good'+' '+'bye': farewell,
+        'close': farewell,
+        'exit': farewell
+    }
+
+    command = user_command[0]
+    if command in users_commands:
+        if len(user_command) > 1:
+            return users_commands[command](*user_command[1:])
+        else:
+            return users_commands[command]()
     else:
-        return('Invalid command.')
+        return 'Invalid command.'
 
 
 def main():
