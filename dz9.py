@@ -10,7 +10,7 @@ def errors_commands(func):
         except (KeyError, ValueError, IndexError, TypeError) as err:
             error_messages = {
                 KeyError: "Contact not found.",
-                ValueError: "Give me name and phone please.",           
+                ValueError: "Give me name and phone please.",
                 IndexError: "Index out of range. Please provide valid input",
                 TypeError: "Invalid number of arguments."
             }
@@ -33,9 +33,8 @@ def add_contact(name, phone):
     """
     if not name.isalpha() or not phone.isnumeric():
         raise ValueError
-    else:
-        users_dict[name] = phone
-        return f"Contact {name} added."
+    users_dict[name] = phone
+    return f"Contact {name} added."
 
 
 @errors_commands
@@ -44,13 +43,11 @@ def change_phone(name, phone):
     """
     if not name in users_dict:
         raise KeyError
-    else:
-        if not phone.isnumeric():
-            raise ValueError
-        else:
-            users_dict[name] = phone
-            return f"Phone {name} changed."
-    
+    if not phone.isnumeric():
+        raise ValueError
+    users_dict[name] = phone
+    return f"Phone {name} changed."
+
 
 @errors_commands
 def show_phone(name):
@@ -58,8 +55,7 @@ def show_phone(name):
     """
     if not name in users_dict:
         raise KeyError
-    else:
-        return f"The phone {name} is {users_dict[name]}."
+    return f"The phone {name} is {users_dict[name]}."
 
 
 @errors_commands
@@ -68,8 +64,7 @@ def show_all():
     """
     if users_dict:
         return "\n".join([f"{name}: {phone}" for name, phone in users_dict.items()])
-    else:
-        return "No contacts found."
+    return "No contacts found."
 
 def farewell():
     """Функція обробляє команди виходу
@@ -91,7 +86,7 @@ def parser_command(user_command):
         'exit': farewell
     }
 
- 
+
     command = user_command[0]
     if command in users_commands:
         if len(user_command) > 1:
@@ -114,10 +109,9 @@ def main():
         user_command = input("Please enter a command: ").lower().split()
         if not user_command:
             continue
-        else:
-            print(parser_command(user_command))
-            if parser_command(user_command) == "Good bye!":
-                sys.exit()
+        print(parser_command(user_command))
+        if parser_command(user_command) == "Good bye!":
+            sys.exit()
 
 
 if __name__ == '__main__':
