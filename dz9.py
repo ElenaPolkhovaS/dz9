@@ -28,7 +28,7 @@ def hello_user():
 
 
 @errors_commands
-def add_contact(name: str, phone: int):
+def add_contact(name, phone):
     """Функція обробляє команду 'add'
     """
     if not name.isalpha() or not phone.isnumeric():
