@@ -7,7 +7,7 @@ def errors_commands(func):
     def inner(*args):
         try:
             return func(*args)
-        except (KeyError, ValueError, IndexError, TypeError, NameError) as err:
+        except (KeyError, ValueError, IndexError, TypeError) as err:
             error_messages = {
                 KeyError: "Contact not found.",
                 ValueError: "Give me name and phone please.",           
